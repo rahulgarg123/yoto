@@ -43,7 +43,7 @@ def extract_cover_art(music_dir, covers_dir):
         except Exception as e:
             print(f"Error processing {filename}: {e}")
 
-def download_playlist(playlist_url):
+def download_playlist(playlist_url, browser=None):
     music_dir = 'downloads/music'
     covers_dir = 'downloads/covers'
     
@@ -73,6 +73,10 @@ def download_playlist(playlist_url):
         ],
     }
 
+    if browser:
+        print(f"Loading cookies from {browser}...")
+        ydl_opts['cookiesfrombrowser'] = (browser,)
+
     print(f"Downloading music from: {playlist_url}")
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
@@ -101,7 +105,11 @@ if __name__ == "__main__":
         default=DEFAULT_PLAYLIST,
         help=f"The URL of the YouTube Music playlist (default: {DEFAULT_PLAYLIST})"
     )
+    parser.add_argument(
+        "--browser",
+        help="Load cookies from this browser (e.g. chrome, firefox, safari) to access premium content. Ensure you are logged into YouTube Music in this browser."
+    )
     
     args = parser.parse_args()
     
-    download_playlist(args.url)
+    download_playlist(args.url, args.browser)

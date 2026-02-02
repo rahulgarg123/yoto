@@ -31,6 +31,13 @@ python yoto_downloader.py "YOUR_PLAYLIST_URL"
 ```
 If no URL is provided, it uses a default playlist configured in the script.
 
+### Premium Content
+If you have a YouTube Premium subscription and want to download premium-only songs, use the `--browser` flag to load cookies from your browser (where you are logged in):
+```bash
+python yoto_downloader.py "YOUR_PLAYLIST_URL" --browser chrome
+```
+Supported browsers: `chrome`, `firefox`, `safari`, `edge`, `opera`, etc.
+
 ## Directory Structure
 - `downloads/music/`: Contains the downloaded MP3 files.
 - `downloads/covers/`: Contains the extracted cover art images.
