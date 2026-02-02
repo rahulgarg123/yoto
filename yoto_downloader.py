@@ -57,6 +57,8 @@ def download_playlist(playlist_url, browser=None):
         'ignoreerrors': True,
         'download_archive': 'downloaded_songs.txt', # Track downloaded songs to avoid re-downloading
         'writethumbnail': True, 
+        'extractor_args': {'youtube': {'player_client': ['web', 'mweb']}},
+        'remote_components': ['ejs:github'],
         'postprocessors': [
             {
                 'key': 'FFmpegExtractAudio',

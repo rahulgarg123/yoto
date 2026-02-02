@@ -12,6 +12,7 @@ A simple tool to download YouTube Music playlists as MP3s with high quality, emb
 ## Prerequisites
 - Python 3.x
 - [ffmpeg](https://ffmpeg.org/) installed and in your PATH.
+- [Node.js](https://nodejs.org/) or [Deno](https://deno.land/) installed (required for solving YouTube signature challenges).
 
 ## Installation
 1. Clone the repository:
