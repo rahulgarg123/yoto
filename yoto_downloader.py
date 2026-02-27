@@ -4,6 +4,7 @@ import yt_dlp
 import os
 import subprocess
 import glob
+from urllib.parse import urlparse, parse_qs
 
 def extract_cover_art(music_dir, covers_dir):
     # Ensure covers directory exists
@@ -44,8 +45,15 @@ def extract_cover_art(music_dir, covers_dir):
             print(f"Error processing {filename}: {e}")
 
 def download_playlist(playlist_url, browser=None):
-    music_dir = 'downloads/music'
-    covers_dir = 'downloads/covers'
+    # Extract playlist ID from URL
+    parsed_url = urlparse(playlist_url)
+    query_params = parse_qs(parsed_url.query)
+    playlist_id = query_params.get('list', ['default'])[0]
+    
+    playlist_dir = os.path.join('downloads', playlist_id)
+    music_dir = os.path.join(playlist_dir, 'music')
+    covers_dir = os.path.join(playlist_dir, 'covers')
+    archive_file = os.path.join(playlist_dir, 'downloaded_songs.txt')
     
     # Ensure directories exist
     os.makedirs(music_dir, exist_ok=True)
@@ -55,7 +63,7 @@ def download_playlist(playlist_url, browser=None):
         'format': 'bestaudio/best',
         'outtmpl': os.path.join(music_dir, '%(artist|Unknown Artist)s - %(title)s.%(ext)s'),
         'ignoreerrors': True,
-        'download_archive': 'downloaded_songs.txt', # Track downloaded songs to avoid re-downloading
+        'download_archive': archive_file, # Track downloaded songs to avoid re-downloading
         'writethumbnail': True, 
         'extractor_args': {'youtube': {'player_client': ['web', 'mweb']}},
         'remote_components': ['ejs:github'],
