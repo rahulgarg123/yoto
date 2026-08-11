@@ -61,7 +61,8 @@ def download_playlist(playlist_url, browser=None):
 
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': os.path.join(music_dir, '%(artist|Unknown Artist)s - %(title)s.%(ext)s'),
+        'outtmpl': os.path.join(music_dir, '%(artist|Unknown Artist).60s - %(title).100s.%(ext)s'),
+        'trim_file_name': 150,
         'ignoreerrors': True,
         'download_archive': archive_file, # Track downloaded songs to avoid re-downloading
         'writethumbnail': True, 
